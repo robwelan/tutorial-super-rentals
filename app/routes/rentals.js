@@ -1,7 +1,13 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
-  model() {
-    return this.get('store').findAll('rental');
-  }   
+  actions: {
+    willTransition: function(transition) {
+      this.controllerFor('application').set('lastRoute', 'one');
+    },
+    goBack: function() {
+      var appController = this.controllerFor('application');
+      this.transitionTo(appController.get('lastRoute'));
+    }
+  }
 });
